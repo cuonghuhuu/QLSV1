@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.Action;
 import javax.swing.ButtonGroup;
@@ -66,6 +67,7 @@ public class QLSVView extends JFrame {
 	public QLSVView() {
 
 		Action action = new QLSVController(this);
+		this.model = new QLSVModel();
 
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -96,7 +98,6 @@ public class QLSVView extends JFrame {
 		JMenuItem mntmNewMenuItem = new JMenuItem("About me");
 		mntmNewMenuItem.setFont(new Font("Segoe UI", Font.PLAIN, 18));
 		menuAbout.add(mntmNewMenuItem);
-		this.model = new QLSVModel();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 907, 737);
 		contentPane = new JPanel();
@@ -146,9 +147,9 @@ public class QLSVView extends JFrame {
 
 		table = new JTable();
 		table.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		table.setModel(new DefaultTableModel(new Object[][] { { null, null, null, null, null, null, null, null }, },
-				new String[] { " M\u00E3 th\u00ED sinh ", " H\u1ECD t\u00EAn ", " Qu\u00EA Qu\u00E1n ", "Giới Tính",
-						"Ng\u00E0y Sinh", " DATABASE", " JAVA OOP ", " C++ " }));
+		table.setModel(new DefaultTableModel(new Object[][] {},
+				new String[] { " M\u00E3 th\u00ED sinh ", " H\u1ECD t\u00EAn ", " Qu\u00EA Qu\u00E1n ",
+						"Gi\u1EDBi T\u00EDnh", "Ng\u00E0y Sinh", " DATABASE", " JAVA OOP ", " C++ " }));
 
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setBounds(10, 129, 851, 141);
@@ -316,17 +317,44 @@ public class QLSVView extends JFrame {
 
 	public void themThiSinh(ThiSinh ts) {
 		this.model.insert(ts);
-		DefaultTableModel model = (DefaultTableModel) table.getModel();
-		model.addRow(new Object[] { ts.getMaThiSinh() + "", ts.getTenThiSinh() + "", ts.getTinhQueQuan().getTenTinh(),
-				(ts.isGioiTinh() ? "Nam " : "Nữ"), ts.getNgaySinh().toString(), ts.getDiemMon1() + "",
-				ts.getDiemMon3() + "", ts.getDiemMon3() + ""
+		DefaultTableModel model_table = (DefaultTableModel) table.getModel();
+		model_table.addRow(new Object[] { ts.getMaThiSinh() + "", ts.getTenThiSinh() + "",
+				ts.getTinhQueQuan().getTenTinh(), (ts.isGioiTinh() ? "Nam " : "Nữ"),
+				ts.getNgaySinh().getDate() + "/" + (ts.getNgaySinh().getMonth() + 1) + "/"
+						+ (ts.getNgaySinh().getYear() + 1900),
+				ts.getDiemMon1() + "", ts.getDiemMon3() + "", ts.getDiemMon3() + ""
 
 		});
 
 	}
 
 	public void capNhatThiSinh(ThiSinh ts) {
-		// TODO Auto-generated method stub
+
+	}
+
+	public void hienThiThongTinThiSinhDaChon() {
+		DefaultTableModel model_table = (DefaultTableModel) table.getModel();
+		int i_row = table.getSelectedRow();
+
+		int maThiSinh = Integer.valueOf(model_table.getValueAt(i_row, 0) + "");
+		String tenThiSinh = model_table.getValueAt(i_row, 1) + "";
+		Tinh tinh = Tinh.getTinhByTen(model_table.getValueAt(i_row, 2) + "");
+		String textGioiTinh = model_table.getValueAt(i_row, 3) + "";
+		boolean gioiTinh = textGioiTinh.equals("Nam");
+		String s_ngaySinh = model_table.getValueAt(i_row, 4) + "";
+		Date ngaySinh = new Date(s_ngaySinh);
+		float diemMon1 = Float.valueOf(model_table.getValueAt(i_row, 5) + "");
+		float diemMon2 = Float.valueOf(model_table.getValueAt(i_row, 6) + "");
+		float diemMon3 = Float.valueOf(model_table.getValueAt(i_row, 7) + "");
+
+		this.textField_iD.setText(maThiSinh + "");
+		this.textField_HoVaTen.setText(tenThiSinh + "");
+		this.comboBox_QueQuan_1.setSelectedItem(tinh.getTenTinh());
+		// this.btn_gioitinh.setSelected(null, gioiTinh);
+		this.textField_NgaySinh.setText(s_ngaySinh + "");
+		this.textField_Database.setText(diemMon1 + "");
+		this.textField_Java.setText(diemMon2 + "");
+		this.textField_C.setText(diemMon3 + "");
 
 	}
 

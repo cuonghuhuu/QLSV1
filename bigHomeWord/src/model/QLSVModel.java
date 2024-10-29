@@ -6,13 +6,9 @@ public class QLSVModel {
 	private ArrayList<ThiSinh> dsThiSinh;
 	private String luaChon;
 
-	public QLSVModel(ArrayList<ThiSinh> dsThiSinh) {
-		this.dsThiSinh = dsThiSinh;
-		this.luaChon = "";
-	}
-
 	public QLSVModel() {
-
+		this.dsThiSinh = new ArrayList<ThiSinh>();
+		this.luaChon = "";
 	}
 
 	public ArrayList<ThiSinh> getDsThiSinh() {

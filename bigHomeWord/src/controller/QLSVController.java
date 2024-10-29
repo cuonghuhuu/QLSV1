@@ -25,7 +25,7 @@ public class QLSVController implements Action {
 			try {
 				int maThiSinh = Integer.valueOf(this.view.textField_iD.getText());
 				String tenThiSinh = this.view.textField_HoVaTen.getText();
-				int tinhQueQuan = this.view.comboBox_QueQuan_1.getSelectedIndex();
+				int tinhQueQuan = this.view.comboBox_QueQuan_1.getSelectedIndex() - 1;
 				Tinh tinh = Tinh.getTinhById(tinhQueQuan);
 				Date ngaySinh = new Date(this.view.textField_NgaySinh.getText());
 				boolean gioiTinh = true;
@@ -51,14 +51,14 @@ public class QLSVController implements Action {
 				e2.printStackTrace();
 			}
 
-		} else if (cm.equals("")) {
+		} else if (cm.equals(" Cập Nhật ")) {
+			this.view.hienThiThongTinThiSinhDaChon();
 
 		}
 
 	}
 
 	public QLSVController(QLSVView view) {
-		super();
 		this.view = view;
 	}
 

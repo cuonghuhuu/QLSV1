@@ -77,4 +77,13 @@ public class Tinh {
 	public static Tinh getTinhById(int tinhQueQuan) {
 		return Tinh.getDSTinh().get(tinhQueQuan);
 	}
+
+	public static Tinh getTinhByTen(String tenTinh) {
+		ArrayList<Tinh> listTinh = Tinh.getDSTinh();
+		for (Tinh tinh : listTinh) {
+			if (tinh.tenTinh.equals(tenTinh))
+				return tinh;
+		}
+		return null;
+	}
 }
